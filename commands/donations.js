@@ -1,6 +1,6 @@
 const Augur = require("augurbot"),
   request = require("request-promise-native"),
-  TwitchClient = require("twitch").default,
+  TwitchClient = require("twitch").ApiClient,
   twitchConfig = require("../config/twitch.json"),
   twitch = TwitchClient.withClientCredentials(twitchConfig.clientId, twitchConfig.clientSecret).helix,
   u = require("../utils/utils");
