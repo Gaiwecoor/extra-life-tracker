@@ -81,7 +81,7 @@ const Module = new Augur.Module()
         let target = u.userMentions(msg).first();
         teamId = Module.db.users.getUser(target).team;
       } else if (!teamId) {
-        teamId = Module.db.servers.getTeam(msg.guild);
+        if (msg.guild) teamId = Module.db.servers.getTeam(msg.guild);
         if (!teamId) teamId = Module.db.users.getUser(msg.author).team;
       }
 
@@ -125,7 +125,7 @@ const Module = new Augur.Module()
         let target = u.userMentions(msg).first();
         teamId = Module.db.users.getUser(target).team;
       } else if (!teamId) {
-        teamId = Module.db.servers.getTeam(msg.guild);
+        if (msg.guild) teamId = Module.db.servers.getTeam(msg.guild);
         if (!teamId) teamId = Module.db.users.getUser(msg.author).team;
       }
 
