@@ -97,8 +97,16 @@ const Module = new Augur.Module()
   description: "Check your personal Extra Life Goal",
   process: async msg => {
     try {
-      let target = u.userMentions(msg).first() || msg.author;
-      let participantId = Module.db.users.getUser(target).participant;
+      let participantId;
+
+      if (u.userMentions(msg).size > 0) {
+        let user = Module.db.users.getUser(u.userMentions(msg).first());
+        if (user) participantId = user.participant;
+      } else if (!participantId) {
+        if (msg.guild) participantId = Module.db.servers.getServer(msg.guild).participant;
+        if (!participantId) participantId = Module.db.users.getUser(msg.author).participant;
+      }
+
       if (!participantId) return msg.reply(`you need to save your participant ID with \`${u.prefix(msg)}iam yourId\` or @mention someone with a saved participant ID!`).then(u.clean);
 
       let participant = await request(`https://extralife.donordrive.com/api/participants/${participantId}`).catch(u.noop);
