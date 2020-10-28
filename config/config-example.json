@@ -9,22 +9,13 @@
     "token": ""
   },
   "events": [
-    "channelCreate",
     "disconnect",
     "error",
-    "guildBanAdd",
-    "guildMemberAdd",
-    "guildMemberRemove",
-    "guildMemberUpdate",
-    "loadConfig",
     "message",
     "messageUpdate",
     "messageReactionAdd",
     "messageReactionRemove",
-    "presenceUpdate",
-    "raw",
-    "userUpdate",
-    "voiceStateUpdate"
+    "raw"
   ],
   "homePage": "",
   "ownerId": "",
