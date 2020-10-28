@@ -16,10 +16,22 @@ const Module = new Augur.Module()
           if (participant.participantID) {
             Module.db.users.setParticipant(msg.author.id, parseInt(participant.participantID, 10));
             if (participant.teamID) Module.db.users.setTeam(msg.author.id, parseInt(participant.teamID, 10));
+            if (participant.links.stream) Module.db.users.setChannel(msg.author.id, participant.links.stream.replace("https://player.twitch.tv/?channel=", ""));
             msg.react("👌").then(u.noop);
           } else msg.reply("I couldn't fetch that participant ID. Please check to ensure you have the right one!").then(u.clean);
         } else msg.reply("I couldn't fetch that participant ID. Please check to ensure you have the right one!").then(u.clean);
       } else msg.reply("you need to give me a participant ID!").then(u.clean);
+    } catch(error) { u.errorHandler(error, msg); }
+  }
+})
+.addCommand({name: "mychannel",
+  description: "Sets your personal Twitch channel.",
+  syntax: "twitchChannel",
+  category: "User",
+  process: async (msg, suffix) => {
+    try {
+      Module.db.users.setChannel(msg.author, suffix || null);
+      msg.react("👌").then(u.noop);
     } catch(error) { u.errorHandler(error, msg); }
   }
 });

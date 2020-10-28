@@ -17,10 +17,38 @@ const Module = new Augur.Module()
     } catch(error) { u.errorHandler(error, msg); }
   }
 })
-.addCommand({name: "setteam",
+.addCommand({name: "serverparticipant",
+  description: "Set the default participant id for the current server.",
+  syntax: "participantId",
+  category: "Admin",
+  aliases: ["setparticipant"],
+  permissions: (msg) => msg.guild && msg.member.hasPermission("MANAGE_GUILD"),
+  process: async (msg, suffix) => {
+    try {
+      if (suffix) {
+        let response = await request(`https://extralife.donordrive.com/api/participants/${encodeURIComponent(suffix)}`).catch(u.noop);
+          if (response) {
+            let participant = JSON.parse(response);
+            if (participant.participantID) {
+              Module.db.users.setParticipant(msg.author.id, parseInt(participant.participantID, 10));
+              if (participant.teamID) Module.db.users.setTeam(msg.author.id, parseInt(participant.teamID, 10));
+              if (participant.links.stream) Module.db.users.setChannel(msg.author.id, participant.links.stream.replace("https://player.twitch.tv/?channel=", ""));
+              msg.react("👌").then(u.noop);
+            } else msg.reply("I couldn't fetch that participant ID. Please check to ensure you have the right one!").then(u.clean);
+          } else msg.reply("I couldn't fetch that participant ID. Please check to ensure you have the right one!").then(u.clean);
+      } else {
+        Module.db.servers.updateServer(msg.guild.id, {channel: null, participant: null, team: null});
+        msg.react("👌").then(u.noop);
+        msg.reply("Server participant has been removed.").then(u.clean);
+      }
+    } catch(error) { u.errorHandler(error, msg); }
+  }
+})
+.addCommand({name: "serverteam",
   description: "Set the default team id for the current server.",
   syntax: "teamId",
   category: "Admin",
+  aliases: ["setteam"],
   permissions: (msg) => msg.guild && msg.member.hasPermission("MANAGE_GUILD"),
   process: async (msg, suffix) => {
     try {
@@ -36,6 +64,25 @@ const Module = new Augur.Module()
           } else msg.reply("I couldn't fetch that team ID. Please check to ensure you have the right one!").then(u.clean);
       } else {
         Module.db.servers.setTeam(msg.guild.id, null);
+        msg.react("👌").then(u.noop);
+        msg.reply("Server Team has been removed.").then(u.clean);
+      }
+    } catch(error) { u.errorHandler(error, msg); }
+  }
+})
+.addCommand({name: "servertwitch",
+  description: "Set the default Twitch channel for the current server.",
+  syntax: "twitchChannel",
+  category: "Admin",
+  aliases: ["settwitch", "setchannel"],
+  permissions: (msg) => msg.guild && msg.member.hasPermission("MANAGE_GUILD"),
+  process: async (msg, suffix) => {
+    try {
+      if (suffix) {
+        Module.db.servers.setChannel(msg.guild, suffix);
+        msg.react("👌").then(u.noop);
+      } else {
+        Module.db.servers.setChannel(msg.guild, null);
         msg.react("👌").then(u.noop);
         msg.reply("Server Team has been removed.").then(u.clean);
       }
