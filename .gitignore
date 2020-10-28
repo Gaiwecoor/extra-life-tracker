@@ -1,3 +1,9 @@
+# Custom stuff
+config/*
+!config/*-example.json
+*-.js
+db.json
+
 # Logs
 logs
 *.log

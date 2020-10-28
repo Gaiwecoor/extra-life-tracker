@@ -1,0 +1,33 @@
+{
+  "adminId": [],
+  "color": [127, 218, 54],
+  "db": {
+    "model": "utils/db.js"
+  },
+  "error": {
+    "id": "",
+    "token": ""
+  },
+  "events": [
+    "channelCreate",
+    "disconnect",
+    "error",
+    "guildBanAdd",
+    "guildMemberAdd",
+    "guildMemberRemove",
+    "guildMemberUpdate",
+    "loadConfig",
+    "message",
+    "messageUpdate",
+    "messageReactionAdd",
+    "messageReactionRemove",
+    "presenceUpdate",
+    "raw",
+    "userUpdate",
+    "voiceStateUpdate"
+  ],
+  "homePage": "",
+  "ownerId": "",
+  "prefix": "el!",
+  "token": ""
+}

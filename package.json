@@ -1,0 +1,27 @@
+{
+  "name": "extra-life-tracker",
+  "version": "1.0.0",
+  "description": "Discord bot for tracking Extra Life donations and goals.",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gaiwecoor/extra-life-tracker.git"
+  },
+  "author": "Kevin \"Gaiwecoor\" Dixon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gaiwecoor/extra-life-tracker/issues"
+  },
+  "homepage": "https://github.com/Gaiwecoor/extra-life-tracker#readme",
+  "dependencies": {
+    "augurbot": "^2.1.2",
+    "discord.js": "^12.4.1",
+    "lowdb": "^1.0.0",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.9",
+    "twitch": "^4.2.7"
+  }
+}
