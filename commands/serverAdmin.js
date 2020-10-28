@@ -30,9 +30,9 @@ const Module = new Augur.Module()
           if (response) {
             let participant = JSON.parse(response);
             if (participant.participantID) {
-              Module.db.users.setParticipant(msg.author.id, parseInt(participant.participantID, 10));
-              if (participant.teamID) Module.db.users.setTeam(msg.author.id, parseInt(participant.teamID, 10));
-              if (participant.links.stream) Module.db.users.setChannel(msg.author.id, participant.links.stream.replace("https://player.twitch.tv/?channel=", ""));
+              Module.db.servers.setParticipant(msg.guild.id, parseInt(participant.participantID, 10));
+              if (participant.teamID) Module.db.servers.setTeam(msg.guild.id, parseInt(participant.teamID, 10));
+              if (participant.links.stream) Module.db.servers.setChannel(msg.guild.id, participant.links.stream.replace("https://player.twitch.tv/?channel=", ""));
               msg.react("👌").then(u.noop);
             } else msg.reply("I couldn't fetch that participant ID. Please check to ensure you have the right one!").then(u.clean);
           } else msg.reply("I couldn't fetch that participant ID. Please check to ensure you have the right one!").then(u.clean);
