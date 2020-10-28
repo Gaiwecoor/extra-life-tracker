@@ -72,17 +72,17 @@ async function fetchExtraLifeTeam(teamId) {
 const Module = new Augur.Module()
 .addCommand({name: "live",
   description: "See who is live on the Extra Life Team",
-  permissions: (msg) => Module.db.users.getUser(msg.author).team || (msg.guild && Module.db.servers.getTeam(msg.guild)),
+  permissions: (msg) => Module.db.users.getTeam(msg.author) || (msg.guild && Module.db.servers.getTeam(msg.guild)),
   process: async (msg, suffix) => {
     try {
       let teamId = suffix;
 
       if (u.userMentions(msg).size > 0) {
         let target = u.userMentions(msg).first();
-        teamId = Module.db.users.getUser(target).team;
+        teamId = Module.db.users.getTeam(target);
       } else if (!teamId) {
         if (msg.guild) teamId = Module.db.servers.getTeam(msg.guild);
-        if (!teamId) teamId = Module.db.users.getUser(msg.author).team;
+        if (!teamId) teamId = Module.db.users.getTeam(msg.author);
       }
 
       if (!teamId) return msg.reply(`you need to tell me a Team ID, save a personal Team with \`${u.prefix(msg)}iam yourParticipantId\`, or save a server Team with \`${u.prefix(msg)}setTeam teamId\`.`).then(u.clean);
@@ -100,11 +100,10 @@ const Module = new Augur.Module()
       let participantId;
 
       if (u.userMentions(msg).size > 0) {
-        let user = Module.db.users.getUser(u.userMentions(msg).first());
-        if (user) participantId = user.participant;
+        participantId = Module.db.users.getParticipant(u.userMentions(msg).first());
       } else if (!participantId) {
-        if (msg.guild) participantId = Module.db.servers.getServer(msg.guild).participant;
-        if (!participantId) participantId = Module.db.users.getUser(msg.author).participant;
+        if (msg.guild) participantId = Module.db.servers.getParticipant(msg.guild);
+        if (!participantId) participantId = Module.db.users.getParticipant(msg.author);
       }
 
       if (!participantId) return msg.reply(`you need to save your participant ID with \`${u.prefix(msg)}iam yourId\` or @mention someone with a saved participant ID!`).then(u.clean);
@@ -130,11 +129,10 @@ const Module = new Augur.Module()
       let teamId = suffix;
 
       if (u.userMentions(msg).size > 0) {
-        let target = u.userMentions(msg).first();
-        teamId = Module.db.users.getUser(target).team;
+        teamId = Module.db.users.getTeam(u.userMentions(msg).first());
       } else if (!teamId) {
         if (msg.guild) teamId = Module.db.servers.getTeam(msg.guild);
-        if (!teamId) teamId = Module.db.users.getUser(msg.author).team;
+        if (!teamId) teamId = Module.db.users.getTeam(msg.author);
       }
 
       if (!teamId) return msg.reply(`you need to tell me a Team ID, save a personal Team with \`${u.prefix(msg)}iam yourParticipantId\`, or save a server Team with \`${u.prefix(msg)}setTeam teamId\`.`).then(u.clean);

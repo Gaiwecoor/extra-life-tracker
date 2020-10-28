@@ -56,12 +56,12 @@ const Module = new Augur.Module()
 
       if (u.userMentions(msg).size > 0) {
         let target = u.userMentions(msg).first();
-        channel = Module.db.users.getUser(target).channel;
+        channel = Module.db.users.getChannel(target);
       } else if (!channel) {
-        if (msg.guild) channel = Module.db.servers.getServer(msg.guild).channel;
-        if (!channel) channel = Module.db.users.getUser(msg.author).channel;
+        if (msg.guild) channel = Module.db.servers.getChannel(msg.guild);
+        if (!channel) channel = Module.db.users.getChannel(msg.author);
       }
-      
+
       if (!channel) return msg.reply(`you need to tell me a Twitch channel, save a personal channel with \`${u.prefix(msg)}mychannel twitchChannel\`, or save a server Twitch channel with \`${u.prefix(msg)}serverTwitch twitchChannel\`.`).then(u.clean);
 
       const stream = await twitch.streams.getStreamByUserName(channel).catch(u.noop);
