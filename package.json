@@ -1,11 +1,11 @@
 {
   "name": "extra-life-tracker",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Discord bot for tracking Extra Life donations and goals.",
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "node bot.js"
+    "start": "node bot.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,9 @@
   "homepage": "https://github.com/Gaiwecoor/extra-life-tracker#readme",
   "dependencies": {
     "augurbot": "^2.1.2",
+    "body-parser": "^1.19.0",
     "discord.js": "^12.4.1",
+    "express": "^4.17.1",
     "lowdb": "^1.0.0",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",

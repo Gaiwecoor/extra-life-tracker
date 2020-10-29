@@ -177,8 +177,8 @@ const Module = new Augur.Module()
     process.exit();
   } catch(error) { u.errorHandler(error, "Bot Disconnect"); process.exit(); }
 })
-.setInit((reload) => {
-  if (!reload) u.errorLog.send(u.embed().setDescription("Bot is ready!"));
+.addEvent("ready", () => {
+  u.errorLog.send(u.embed().setAuthor(Module.client.user.username, Module.client.user.displayAvatarURL()).setDescription("Bot is ready!"));
 })
 .setUnload(() => true);
 
