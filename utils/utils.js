@@ -153,7 +153,7 @@ const Utils = {
     const path = require("path");
     return path.resolve(path.dirname(require.main.filename), ...segments);
   },
-  prefix: (msg) => msg.guild ? db.servers.prefix(msg.guild.id) : config.prefix,
+  prefix: (msg) => msg.guild ? (db.servers.prefix(msg.guild.id) || config.prefix) : config.prefix,
   properCase: (txt) => txt.split(" ").map(word => (word[0].toUpperCase() + word.substr(1).toLowerCase())).join(" "),
   rand: (array) => array[Math.floor(Math.random() * array.length)],
   userMentions: (msg, member = false) => {
